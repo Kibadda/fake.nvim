@@ -6,17 +6,10 @@ local methods = vim.lsp.protocol.Methods
 
 ---@param opts? fake.server
 ---@return fun(dispatchers: vim.lsp.rpc.Dispatchers): vim.lsp.rpc.PublicClient
-local function create_server(opts)
+local function server(opts)
   opts = opts or {}
   local handlers = opts.handlers or {}
-
-  local capabilities = {}
-
-  for name in pairs(handlers) do
-    for _, capability in ipairs(vim.lsp._request_name_to_capability[name] or {}) do
-      capabilities[capability] = {}
-    end
-  end
+  local capabilities = opts.capabilities or {}
 
   return function(dispatchers)
     ---@type vim.lsp.rpc.PublicClient
@@ -62,8 +55,11 @@ local function create_server(opts)
   end
 end
 
-return create_server {
+local snippets = require "fake.handlers.snippets"
+
+return server {
+  capabilities = vim.tbl_deep_extend("error", {}, snippets.capabilities),
   handlers = {
-    [methods.textDocument_completion] = require "fake.handlers.snippets",
+    [methods.textDocument_completion] = snippets.handler,
   },
 }
