@@ -2,14 +2,20 @@
 ---@field enabled? fun(buf: number): boolean
 ---@field snippets table<string, string|fun(): string>
 
+---@class fake.codelens
+---@field enabled? fun(buf: number): boolean
+---@field lenses fun(buf: number): lsp.CodeLens[]
+
 ---@class fake.config
 ---@field snippets fake.snippets[]
 ---@field commands table<string, fun(args: lsp.LSPAny)>
+---@field codelenses fake.codelens[]
 
 ---@class fake.internalconfig
 local FakeDefaultConfig = {
   snippets = {},
   commands = {},
+  codelenses = {},
 }
 
 ---@type fake.config | (fun(): fake.config) | nil

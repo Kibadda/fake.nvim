@@ -21,6 +21,7 @@ function M.validate(config)
   ok, err = validate("fake", {
     snippets = { config.snippets, "table" },
     commands = { config.commands, "table" },
+    codelenses = { config.codelenses, "table" },
   })
   if not ok then
     return false, err
@@ -50,6 +51,16 @@ function M.validate(config)
     ok, err = validate("fake.commands." .. name, {
       name = { name, "string" },
       command = { command, "function" },
+    })
+    if not ok then
+      return false, err
+    end
+  end
+
+  for i, codelenses in ipairs(config.codelenses) do
+    ok, err = validate("fake.codelenses." .. i, {
+      enabled = { codelenses.enabled, "function", true },
+      lenses = { codelenses.lenses, "function" },
     })
     if not ok then
       return false, err

@@ -13,5 +13,6 @@ Default config:
 vim.g.fake = {
   snippets = {},
   commands = {},
+  codelenses = {},
 }
 ```
