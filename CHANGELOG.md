@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/Kibadda/fake.nvim/compare/v2.0.0...v2.1.0) (2024-11-06)
+
+
+### Features
+
+* **codeactions:** add codeactions capability ([7626629](https://github.com/Kibadda/fake.nvim/commit/76266294cd7fde54d73a92f22f7a770802587648))
+
 ## [2.0.0](https://github.com/Kibadda/fake.nvim/compare/v1.0.0...v2.0.0) (2024-11-06)
 
 
