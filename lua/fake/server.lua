@@ -56,10 +56,12 @@ local function server(opts)
 end
 
 local snippets = require "fake.handlers.snippets"
+local commands = require "fake.handlers.commands"
 
 return server {
-  capabilities = vim.tbl_deep_extend("error", {}, snippets.capabilities),
+  capabilities = vim.tbl_deep_extend("error", snippets.capabilities, commands.capabilities),
   handlers = {
     [methods.textDocument_completion] = snippets.handler,
+    [methods.workspace_executeCommand] = commands.handler,
   },
 }

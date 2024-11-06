@@ -4,10 +4,12 @@
 
 ---@class fake.config
 ---@field snippets fake.snippets[]
+---@field commands table<string, fun(args: lsp.LSPAny)>
 
 ---@class fake.internalconfig
 local FakeDefaultConfig = {
   snippets = {},
+  commands = {},
 }
 
 ---@type fake.config | (fun(): fake.config) | nil

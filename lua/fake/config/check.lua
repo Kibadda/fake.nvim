@@ -20,6 +20,7 @@ function M.validate(config)
 
   ok, err = validate("fake", {
     snippets = { config.snippets, "table" },
+    commands = { config.commands, "table" },
   })
   if not ok then
     return false, err
@@ -42,6 +43,16 @@ function M.validate(config)
       if not ok then
         return false, err
       end
+    end
+  end
+
+  for name, command in vim.spairs(config.commands) do
+    ok, err = validate("fake.commands." .. name, {
+      name = { name, "string" },
+      command = { command, "function" },
+    })
+    if not ok then
+      return false, err
     end
   end
 

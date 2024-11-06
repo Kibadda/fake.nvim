@@ -12,5 +12,6 @@ Default config:
 ```lua
 vim.g.fake = {
   snippets = {},
+  commands = {},
 }
 ```
