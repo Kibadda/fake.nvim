@@ -8,10 +8,15 @@
 ---@field enabled? fun(buf: number): boolean
 ---@field lenses fun(buf: number): lsp.CodeLens[]
 
+---@class fake.codeactions
+---@field enabled? fun(buf: number): boolean
+---@field codeactions fun(buf: number): lsp.CodeAction[]
+
 ---@class fake.config
 ---@field snippets fake.snippets[]
 ---@field commands fake.commands
 ---@field codelenses fake.codelens[]
+---@field codeactions fake.codeactions[]
 
 ---@class fake.internalconfig
 local FakeDefaultConfig = {
@@ -21,6 +26,8 @@ local FakeDefaultConfig = {
   commands = {},
   ---@type fake.codelens[]
   codelenses = {},
+  ---@type fake.codeactions[]
+  codeactions = {},
 }
 
 ---@type fake.config | (fun(): fake.config) | nil

@@ -6,6 +6,7 @@ Currently provides following features:
 - snippets
 - commands
 - codelenses
+- codeactions
 
 ## Configuration
 To change the default configuration, set `vim.g.fake`.
@@ -16,5 +17,6 @@ vim.g.fake = {
   snippets = {},
   commands = {},
   codelenses = {},
+  codeactions = {},
 }
 ```

@@ -58,12 +58,20 @@ end
 local snippets = require "fake.handlers.snippets"
 local commands = require "fake.handlers.commands"
 local codelens = require "fake.handlers.codelens"
+local codeactions = require "fake.handlers.codeactions"
 
 return server {
-  capabilities = vim.tbl_deep_extend("error", snippets.capabilities, commands.capabilities, codelens.capabilities),
+  capabilities = vim.tbl_deep_extend(
+    "error",
+    snippets.capabilities,
+    commands.capabilities,
+    codelens.capabilities,
+    codeactions.capabilities
+  ),
   handlers = {
     [methods.textDocument_completion] = snippets.handler,
     [methods.workspace_executeCommand] = commands.handler,
     [methods.textDocument_codeLens] = codelens.handler,
+    [methods.textDocument_codeAction] = codeactions.handler,
   },
 }
