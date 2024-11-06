@@ -1,18 +1,13 @@
----@alias fake.snippets.snippet string|fun(): string
-
 ---@class fake.snippets
----@field global table<string, fake.snippets.snippet>
----@field filetypes table<string, fake.snippets.snippet>
+---@field enabled? fun(buf: number): boolean
+---@field snippets table<string, string|fun(): string>
 
 ---@class fake.config
----@field snippets fake.snippets
+---@field snippets fake.snippets[]
 
 ---@class fake.internalconfig
 local FakeDefaultConfig = {
-  snippets = {
-    global = {},
-    filetypes = {},
-  },
+  snippets = {},
 }
 
 ---@type fake.config | (fun(): fake.config) | nil

@@ -3,26 +3,8 @@ local M = {}
 ---@type vim.lsp.Client?
 local client
 
-local function should_attach(buf)
-  if vim.bo[buf].buftype ~= "" then
-    return false
-  end
-
-  local config = require "fake.config"
-
-  if not vim.tbl_isempty(config.snippets.global) then
-    return true
-  end
-
-  if config.snippets.filetypes[vim.bo[buf].filetype] then
-    return true
-  end
-
-  return false
-end
-
 function M.start(buf)
-  if not should_attach(buf) then
+  if vim.bo[buf].buftype ~= "" then
     return
   end
 
