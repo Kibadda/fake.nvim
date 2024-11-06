@@ -12,7 +12,7 @@ function M.start(buf)
 
   if not client then
     local id = vim.lsp.start_client {
-      name = "fake-lsp",
+      name = "fakels",
       cmd = server,
     }
 
