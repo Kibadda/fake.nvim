@@ -4,6 +4,8 @@ simple in process language server
 Currently provides following features:
 
 - snippets
+- commands
+- codelenses
 
 ## Configuration
 To change the default configuration, set `vim.g.fake`.
