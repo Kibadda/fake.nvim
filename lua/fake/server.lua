@@ -1,7 +1,7 @@
 local methods = vim.lsp.protocol.Methods
 
 ---@class fake.server
----@field handlers? table<string, fun(method: string, params: lsp.LSPAny): any>
+---@field handlers? table<string, fun(params: lsp.LSPAny): any>
 ---@field capabilities? table
 
 ---@param opts? fake.server
@@ -21,7 +21,7 @@ local function server(opts)
     function srv.request(method, params, callback)
       local handler = handlers[method]
       if handler then
-        local response, err = handler(method, params)
+        local response, err = handler(params)
         callback(err, response)
       elseif method == methods.initialize then
         callback(nil, {

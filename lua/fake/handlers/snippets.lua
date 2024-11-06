@@ -3,8 +3,8 @@ return {
   capabilities = {
     completionProvider = {},
   },
-  ---@type fun(_, params: lsp.CompletionParams): lsp.CompletionItem[]
-  handler = function(_, params)
+  ---@type fun(params: lsp.CompletionParams): lsp.CompletionItem[]
+  handler = function(params)
     local bufnr = vim.uri_to_bufnr(params.textDocument.uri)
     local previous_word = vim.api
       .nvim_buf_get_text(bufnr, params.position.line, 0, params.position.line, params.position.character, {})[1]
