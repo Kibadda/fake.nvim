@@ -1,29 +1,77 @@
-local M = {}
+local methods = vim.lsp.protocol.Methods
 
----@type vim.lsp.Client?
-local client
+---@class fake.server
+---@field handlers? table<string, fun(params: lsp.LSPAny): any>
+---@field capabilities? table
 
-function M.start(buf)
-  if vim.bo[buf].buftype ~= "" then
-    return
-  end
+---@param opts? fake.server
+---@return fun(dispatchers: vim.lsp.rpc.Dispatchers): vim.lsp.rpc.PublicClient
+local function server(opts)
+  opts = opts or {}
+  local handlers = opts.handlers or {}
+  local capabilities = opts.capabilities or {}
 
-  local server = require "fake.server"
+  return function(dispatchers)
+    ---@type vim.lsp.rpc.PublicClient
+    ---@diagnostic disable-next-line:missing-fields
+    local srv = {}
+    local closing = false
+    local request_id = 0
 
-  if not client then
-    local id = vim.lsp.start_client {
-      name = "fakels",
-      cmd = server,
-    }
+    function srv.request(method, params, callback)
+      local handler = handlers[method]
+      if handler then
+        local response, err = handler(params)
+        callback(err, response)
+      elseif method == methods.initialize then
+        callback(nil, {
+          capabilities = capabilities,
+        })
+      elseif method == methods.shutdown then
+        callback(nil, nil)
+      end
 
-    if id then
-      client = vim.lsp.get_client_by_id(id)
+      request_id = request_id + 1
+
+      return true, request_id
     end
-  end
 
-  if client then
-    vim.lsp.buf_attach_client(buf, client.id)
+    function srv.notify(method, _)
+      if method == methods.exit then
+        dispatchers.on_exit(0, 15)
+      end
+      return true
+    end
+
+    function srv.is_closing()
+      return closing
+    end
+
+    function srv.terminate()
+      closing = true
+    end
+
+    return srv
   end
 end
 
-return M
+local snippets = require "fake.handlers.snippets"
+local commands = require "fake.handlers.commands"
+local codelens = require "fake.handlers.codelens"
+local codeactions = require "fake.handlers.codeactions"
+
+return server {
+  capabilities = vim.tbl_deep_extend(
+    "error",
+    snippets.capabilities,
+    commands.capabilities,
+    codelens.capabilities,
+    codeactions.capabilities
+  ),
+  handlers = {
+    [methods.textDocument_completion] = snippets.handler,
+    [methods.workspace_executeCommand] = commands.handler,
+    [methods.textDocument_codeLens] = codelens.handler,
+    [methods.textDocument_codeAction] = codeactions.handler,
+  },
+}
