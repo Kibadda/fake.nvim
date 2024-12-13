@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.0.0](https://github.com/Kibadda/fake.nvim/compare/v2.0.0...v3.0.0) (2024-12-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* use new 0.11 vim.lsp.config
+
+### Features
+
+* **codeactions:** add codeactions capability ([7626629](https://github.com/Kibadda/fake.nvim/commit/76266294cd7fde54d73a92f22f7a770802587648))
+
+
+### Code Refactoring
+
+* use new 0.11 vim.lsp.config ([e5f4cf1](https://github.com/Kibadda/fake.nvim/commit/e5f4cf101ce5881c1deca03945c5d8d4e9885469))
+
 ## [2.0.0](https://github.com/Kibadda/fake.nvim/compare/v1.0.0...v2.0.0) (2024-11-06)
 
 
