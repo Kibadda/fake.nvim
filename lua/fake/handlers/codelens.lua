@@ -1,3 +1,5 @@
+local handler = require "fake.handlers"
+
 return {
   ---@type lsp.ServerCapabilities
   capabilities = {
@@ -11,7 +13,7 @@ return {
     local result = {}
 
     for _, data in ipairs(config) do
-      if data.codelenses and (not data.enabled or data.enabled(bufnr)) then
+      if data.codelenses and handler.is_enabled(data, bufnr) then
         vim.list_extend(result, data.codelenses(bufnr))
       end
     end

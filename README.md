@@ -16,6 +16,8 @@ Default config:
 vim.g.fake = {
   {
     enabled = function() return true end,
+    filetype = {},
+    filename = {},
     snippets = {},
     commands = {},
     codelenses = {},

@@ -1,5 +1,7 @@
 ---@class fake.data
 ---@field enabled? fun(buf: number): boolean
+---@field filetype? string|string[]
+---@field filename? string|string[]
 ---@field snippets? table<string, string|fun(): string>
 ---@field codelenses? fun(buf: number): lsp.CodeLens[]
 ---@field codeactions? fun(buf: number): lsp.CodeAction[]

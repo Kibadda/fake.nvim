@@ -12,7 +12,7 @@ local function validate(path, tbl)
 end
 
 --- validate given config
----@param config fake.internalconfig
+---@param config fake.config
 ---@return boolean
 ---@return string?
 function M.validate(config)
@@ -21,6 +21,8 @@ function M.validate(config)
   for i, data in ipairs(config) do
     ok, err = validate("fake." .. i, {
       enabled = { data.enabled, "function", true },
+      filetype = { data.filetype, { "string", "table" }, true },
+      filename = { data.filename, { "string", "table" }, true },
       snippets = { data.snippets, "table", true },
       codelenses = { data.codelenses, "function", true },
       codeactions = { data.codeactions, "function", true },

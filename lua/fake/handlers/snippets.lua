@@ -1,3 +1,5 @@
+local handler = require "fake.handlers"
+
 return {
   ---@type lsp.ServerCapabilities
   capabilities = {
@@ -14,7 +16,7 @@ return {
     local result = {}
 
     for _, data in ipairs(config) do
-      if data.snippets and (not data.enabled or data.enabled(bufnr)) then
+      if data.snippets and handler.is_enabled(data, bufnr) then
         for label, snippet in pairs(data.snippets) do
           if vim.startswith(label, previous_word) then
             local text = snippet
