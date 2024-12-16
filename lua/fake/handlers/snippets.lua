@@ -13,9 +13,9 @@ return {
 
     local result = {}
 
-    for _, snippets in ipairs(config.snippets) do
-      if not snippets.enabled or snippets.enabled(bufnr) then
-        for label, snippet in pairs(snippets.snippets) do
+    for _, data in ipairs(config) do
+      if data.snippets and (not data.enabled or data.enabled(bufnr)) then
+        for label, snippet in pairs(data.snippets) do
           if vim.startswith(label, previous_word) then
             local text = snippet
 

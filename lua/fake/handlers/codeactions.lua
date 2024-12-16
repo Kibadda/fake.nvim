@@ -10,9 +10,9 @@ return {
 
     local result = {}
 
-    for _, codeactions in ipairs(config.codeactions) do
-      if not codeactions.enabled or codeactions.enabled(bufnr) then
-        vim.list_extend(result, codeactions.codeactions(bufnr))
+    for _, data in ipairs(config) do
+      if data.codeactions and (not data.enabled or data.enabled(bufnr)) then
+        vim.list_extend(result, data.codeactions(bufnr))
       end
     end
 

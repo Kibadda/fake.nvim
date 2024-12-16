@@ -18,26 +18,20 @@ end
 function M.validate(config)
   local ok, err
 
-  ok, err = validate("fake", {
-    snippets = { config.snippets, "table" },
-    commands = { config.commands, "table" },
-    codelenses = { config.codelenses, "table" },
-  })
-  if not ok then
-    return false, err
-  end
-
-  for i, snippets in ipairs(config.snippets) do
-    ok, err = validate("fake.snippets." .. i, {
-      enabled = { snippets.enabled, "function", true },
-      snippets = { snippets.snippets, "table" },
+  for i, data in ipairs(config) do
+    ok, err = validate("fake." .. i, {
+      enabled = { data.enabled, "function", true },
+      snippets = { data.snippets, "table", true },
+      codelenses = { data.codelenses, "function", true },
+      codeactions = { data.codeactions, "function", true },
+      commands = { data.commands, "table", true },
     })
     if not ok then
       return false, err
     end
 
-    for name, snippet in vim.spairs(snippets.snippets) do
-      ok, err = validate("fake.snippets." .. i .. "." .. name, {
+    for name, snippet in vim.spairs(data.snippets or {}) do
+      ok, err = validate("fake." .. i .. ".snippets." .. name, {
         name = { name, "string" },
         snippet = { snippet, { "string", "function" } },
       })
@@ -45,25 +39,15 @@ function M.validate(config)
         return false, err
       end
     end
-  end
 
-  for name, command in vim.spairs(config.commands) do
-    ok, err = validate("fake.commands." .. name, {
-      name = { name, "string" },
-      command = { command, "function" },
-    })
-    if not ok then
-      return false, err
-    end
-  end
-
-  for i, codelenses in ipairs(config.codelenses) do
-    ok, err = validate("fake.codelenses." .. i, {
-      enabled = { codelenses.enabled, "function", true },
-      lenses = { codelenses.lenses, "function" },
-    })
-    if not ok then
-      return false, err
+    for name, command in vim.spairs(data.commands or {}) do
+      ok, err = validate("fake." .. i .. ".command." .. name, {
+        name = { name, "string" },
+        command = { command, "function" },
+      })
+      if not ok then
+        return false, err
+      end
     end
   end
 

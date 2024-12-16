@@ -1,34 +1,14 @@
----@class fake.snippets
+---@class fake.data
 ---@field enabled? fun(buf: number): boolean
----@field snippets table<string, string|fun(): string>
+---@field snippets? table<string, string|fun(): string>
+---@field codelenses? fun(buf: number): lsp.CodeLens[]
+---@field codeactions? fun(buf: number): lsp.CodeAction[]
+---@field commands? table<string, fun(args: lsp.LSPAny)>
 
----@alias fake.commands table<string, fun(args: lsp.LSPAny)>
+---@alias fake.config fake.data[]
 
----@class fake.codelens
----@field enabled? fun(buf: number): boolean
----@field lenses fun(buf: number): lsp.CodeLens[]
-
----@class fake.codeactions
----@field enabled? fun(buf: number): boolean
----@field codeactions fun(buf: number): lsp.CodeAction[]
-
----@class fake.config
----@field snippets fake.snippets[]
----@field commands fake.commands
----@field codelenses fake.codelens[]
----@field codeactions fake.codeactions[]
-
----@class fake.internalconfig
-local FakeDefaultConfig = {
-  ---@type fake.snippets[]
-  snippets = {},
-  ---@type fake.commands
-  commands = {},
-  ---@type fake.codelens[]
-  codelenses = {},
-  ---@type fake.codeactions[]
-  codeactions = {},
-}
+---@type fake.config
+local FakeDefaultConfig = {}
 
 ---@type fake.config | (fun(): fake.config) | nil
 vim.g.fake = vim.g.fake
@@ -36,7 +16,7 @@ vim.g.fake = vim.g.fake
 ---@type fake.config
 local opts = type(vim.g.fake) == "function" and vim.g.fake() or vim.g.fake or {}
 
----@type fake.internalconfig
+---@type fake.config
 local FakeConfig = vim.tbl_deep_extend("force", {}, FakeDefaultConfig, opts)
 
 local check = require "fake.config.check"

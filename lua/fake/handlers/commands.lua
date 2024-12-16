@@ -8,7 +8,13 @@ function builtin.open_url(args)
   vim.ui.open(args.url)
 end
 
-local commands = vim.tbl_extend("force", {}, builtin, require("fake.config").commands)
+local commands = vim.deepcopy(builtin)
+
+for _, data in ipairs(require "fake.config") do
+  if data.commands then
+    commands = vim.tbl_extend("error", commands, data.commands)
+  end
+end
 
 return {
   ---@type lsp.ServerCapabilities

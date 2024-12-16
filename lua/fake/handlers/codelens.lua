@@ -10,9 +10,9 @@ return {
 
     local result = {}
 
-    for _, codelenses in ipairs(config.codelenses) do
-      if not codelenses.enabled or codelenses.enabled(bufnr) then
-        vim.list_extend(result, codelenses.lenses(bufnr))
+    for _, data in ipairs(config) do
+      if data.codelenses and (not data.enabled or data.enabled(bufnr)) then
+        vim.list_extend(result, data.codelenses(bufnr))
       end
     end
 
