@@ -57,7 +57,7 @@ end
 
 local snippets = require "fake.handlers.snippets"
 local commands = require "fake.handlers.commands"
-local codelens = require "fake.handlers.codelens"
+local codelenses = require "fake.handlers.codelenses"
 local codeactions = require "fake.handlers.codeactions"
 
 return server {
@@ -65,13 +65,13 @@ return server {
     "error",
     snippets.capabilities,
     commands.capabilities,
-    codelens.capabilities,
+    codelenses.capabilities,
     codeactions.capabilities
   ),
   handlers = {
     [methods.textDocument_completion] = snippets.handler,
     [methods.workspace_executeCommand] = commands.handler,
-    [methods.textDocument_codeLens] = codelens.handler,
+    [methods.textDocument_codeLens] = codelenses.handler,
     [methods.textDocument_codeAction] = codeactions.handler,
   },
 }
