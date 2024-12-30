@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.1](https://github.com/Kibadda/fake.nvim/compare/v4.0.0...v4.0.1) (2024-12-30)
+
+
+### Bug Fixes
+
+* **codelenses:** move file ([4267f0b](https://github.com/Kibadda/fake.nvim/commit/4267f0bdbc9664f4f3668961c0a63ad2d87b14e6))
+
 ## [4.0.0](https://github.com/Kibadda/fake.nvim/compare/v3.0.0...v4.0.0) (2024-12-30)
 
 
