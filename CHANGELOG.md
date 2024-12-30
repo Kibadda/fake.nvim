@@ -1,5 +1,22 @@
 # Changelog
 
+## [4.0.0](https://github.com/Kibadda/fake.nvim/compare/v3.0.0...v4.0.0) (2024-12-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* **config:** simplify config definition
+
+### Features
+
+* **config:** add simple options for filetype and filename filter ([e5fe34f](https://github.com/Kibadda/fake.nvim/commit/e5fe34f8ecba2e7eeb95c4e721bc5ebf42c75d92))
+* **config:** simplify config definition ([10b23c6](https://github.com/Kibadda/fake.nvim/commit/10b23c67a0974e4c11925b91bbd311a56d635bae))
+
+
+### Bug Fixes
+
+* **lsp:** move config definition to plugin file ([d7c79f4](https://github.com/Kibadda/fake.nvim/commit/d7c79f44296fc9a5c3fc2c0569fe8115bcc7845f))
+
 ## [3.0.0](https://github.com/Kibadda/fake.nvim/compare/v2.0.0...v3.0.0) (2024-12-13)
 
 
