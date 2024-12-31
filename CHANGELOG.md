@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.0](https://github.com/Kibadda/fake.nvim/compare/v4.0.1...v4.1.0) (2024-12-31)
+
+
+### Features
+
+* **lsp:** move config to lsp runtime file ([fb7bfb8](https://github.com/Kibadda/fake.nvim/commit/fb7bfb88b9791487db238a37be71f8eb59ea159c))
+
 ## [4.0.1](https://github.com/Kibadda/fake.nvim/compare/v4.0.0...v4.0.1) (2024-12-30)
 
 
