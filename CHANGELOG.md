@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.1.0](https://github.com/Kibadda/fake.nvim/compare/v4.0.1...v4.1.0) (2025-01-22)
+
+
+### Features
+
+* add nix files ([ee206e4](https://github.com/Kibadda/fake.nvim/commit/ee206e49f519b8dc6d8f7356e50dce5b64e4f651))
+* **lsp:** move config to lsp runtime file ([fb7bfb8](https://github.com/Kibadda/fake.nvim/commit/fb7bfb88b9791487db238a37be71f8eb59ea159c))
+
 ## [4.0.1](https://github.com/Kibadda/fake.nvim/compare/v4.0.0...v4.0.1) (2024-12-30)
 
 
