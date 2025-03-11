@@ -25,3 +25,13 @@ vim.g.fake = {
   },
 }
 ```
+
+Also supports project specific configuration. For this add a file named `.fake.lua` to the root of your project and set `vim.g.fake_local`.
+
+```lua
+vim.g.fake_local = {
+  {
+    snippets = {},
+  },
+}
+```
