@@ -24,17 +24,16 @@ local FakeConfig = vim.tbl_deep_extend("force", {}, FakeDefaultConfig, opts)
 local cwd = vim.uv.cwd()
 if vim.fn.filereadable(cwd .. "/.fake.lua") == 1 then
   local contents = vim.secure.read(cwd .. "/.fake.lua")
-  if contents then
+  if type(contents) == "string" then
     load(contents)()
     local local_opts = type(vim.g.fake_local) == "function" and vim.g.fake_local() or vim.g.fake_local or {}
     FakeConfig = vim.tbl_deep_extend("force", {}, FakeConfig, local_opts)
   end
 end
 
-local check = require "fake.config.check"
-local ok, err = check.validate(FakeConfig)
+local ok = require("fake.config.check").validate(FakeConfig)
 if not ok then
-  vim.notify("fake: " .. err, vim.log.levels.ERROR)
+  vim.notify("fake: there are errors in your config. see `:checkhealth fake`", vim.log.levels.ERROR)
 end
 
 return FakeConfig

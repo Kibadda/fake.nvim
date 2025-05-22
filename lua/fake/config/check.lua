@@ -1,59 +1,51 @@
 local M = {}
 
---- small wrapper around vim.validate
----@param path string
----@param tbl table
----@return boolean
----@return string?
-local function validate(path, tbl)
-  local prefix = "invalid config: "
-  local ok, err = pcall(vim.validate, tbl)
-  return ok or false, prefix .. (err and path .. "." .. err or path)
-end
-
 --- validate given config
 ---@param config fake.config
 ---@return boolean
----@return string?
+---@return string[]
 function M.validate(config)
-  local ok, err
+  local errors = {}
 
-  for i, data in ipairs(config) do
-    ok, err = validate("fake." .. i, {
-      enabled = { data.enabled, "function", true },
-      filetype = { data.filetype, { "string", "table" }, true },
-      filename = { data.filename, { "string", "table" }, true },
-      snippets = { data.snippets, "table", true },
-      codelenses = { data.codelenses, "function", true },
-      codeactions = { data.codeactions, "function", true },
-      commands = { data.commands, "table", true },
-    })
+  --- small wrapper around vim.validate
+  ---@param name string
+  ---@param value any
+  ---@param types any|any[]
+  ---@param optional? boolean
+  ---@return boolean
+  local function validate(name, value, types, optional)
+    local ok, err = pcall(vim.validate, name, value, types, optional)
+
     if not ok then
-      return false, err
+      table.insert(errors, err)
     end
 
-    for name, snippet in vim.spairs(data.snippets or {}) do
-      ok, err = validate("fake." .. i .. ".snippets." .. name, {
-        name = { name, "string" },
-        snippet = { snippet, { "string", "function" } },
-      })
-      if not ok then
-        return false, err
+    return ok
+  end
+
+  for i, data in ipairs(config) do
+    validate("fake." .. i .. ".enabled", data.enabled, "function", true)
+    validate("fake." .. i .. ".filetype", data.filetype, { "string", "table" }, true)
+    validate("fake." .. i .. ".filename", data.filename, { "string", "table" }, true)
+    validate("fake." .. i .. ".codelenses", data.codelenses, "function", true)
+    validate("fake." .. i .. ".codeactions", data.codeactions, "function", true)
+
+    if validate("fake." .. i .. ".snippets", data.snippets, "table", true) and data.snippets then
+      for name, snippet in vim.spairs(data.snippets) do
+        validate("fake." .. i .. ".snippets." .. tostring(name), name, "string")
+        validate("fake." .. i .. ".snippets." .. tostring(name) .. ".snippet", snippet, { "string", "function" })
       end
     end
 
-    for name, command in vim.spairs(data.commands or {}) do
-      ok, err = validate("fake." .. i .. ".command." .. name, {
-        name = { name, "string" },
-        command = { command, "function" },
-      })
-      if not ok then
-        return false, err
+    if validate("fake." .. i .. ".commands", data.commands, "table", true) and data.commands then
+      for name, command in vim.spairs(data.commands) do
+        validate("fake." .. i .. ".commands." .. tostring(name), name, "string")
+        validate("fake." .. i .. ".commands." .. tostring(name) .. ".command", command, "function")
       end
     end
   end
 
-  return true
+  return #errors == 0, errors
 end
 
 return M
