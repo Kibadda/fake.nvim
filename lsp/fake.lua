@@ -1,4 +1,4 @@
-vim.lsp.config.fake = {
+return {
   name = "fake",
   cmd = require "fake",
   reuse_client = function()
