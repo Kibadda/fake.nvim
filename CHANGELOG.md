@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.1](https://github.com/Kibadda/fake.nvim/compare/v4.1.0...v4.1.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* use return in lsp/fake.lua ([943f205](https://github.com/Kibadda/fake.nvim/commit/943f2058facdaa36556da32edb0f435e439287a1))
+
 ## [4.1.0](https://github.com/Kibadda/fake.nvim/compare/v4.0.1...v4.1.0) (2025-05-22)
 
 
